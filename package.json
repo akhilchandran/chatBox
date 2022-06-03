@@ -1,0 +1,26 @@
+{
+  "name": "chatbox",
+  "version": "1.0.0",
+  "description": "APi services to Group chat",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp sanity"
+  },
+  "keywords": [
+    "chat",
+    "groupChat",
+    "teamChat"
+  ],
+  "author": "Akhil chandran T R",
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "chai-as-promised": "^7.1.1",
+    "gulp": "^4.0.2",
+    "mocha": "^10.0.0",
+    "gulp-mocha": "^8.0.0"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
