@@ -7,7 +7,7 @@ const router = require('./routes');
 // app.use(express_enforces_ssl());
 app.use(helmet());
 app.use('/', router);
-const server = app.listen(8080, function() {
+const server = app.listen(3001, function() {
   const host = server.address().address;
   const port = server.address().port;
   console.log('API server listening on host '+host+', port '+port+'!');
