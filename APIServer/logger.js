@@ -1,0 +1,37 @@
+'use strict';
+
+const winston = require('winston');
+const pjson = require('../package.json');
+
+function getLogger(config) {
+  let winstonFormat = winston.format.json();
+  const metaData = {
+    app: pjson.name,
+    version: pjson.version,
+    time: new Date().toISOString(),
+  };
+
+  if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'staging') {
+    winstonFormat = winston.format.combine(
+      winston.format.json(),
+      winston.format.prettyPrint(),
+      winston.format.colorize(),
+    );
+  }
+
+  return winston.createLogger({
+    defaultMeta: metaData,
+    transports: [
+      new winston.transports.Console({
+        level: config.loggerLevel,
+        format: winstonFormat,
+        handleExceptions: true,
+        silent: process.env.NODE_ENV === 'test' && !process.env.SHOW_LOGS,
+      }),
+    ],
+  });
+}
+
+module.exports = {
+  getLogger,
+};
