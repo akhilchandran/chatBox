@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  social-media-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    depends_on:
+      - db
+    environment:
+      UV_THREADPOOL_SIZE: 128
+      NODE_ENV: docker
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - '3001:3000'
+  db:
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGPASSWORD: postgres
+      POSTGRES_DB: chat-box-local
+    healthcheck:
+      test: ['CMD', '/health-check.sh', 'chat-box-local', 'postgres', 'postgres']
+      interval: 15s
+      timeout: 10s
+      retries: 20
+    ports:
+      - '15432:5432'
+    volumes:
+      - ./db/health-check.sh:/health-check.sh
+      - ./db/postgresql.conf:/etc/postgresql.conf
+    tmpfs:
+      - /var/lib/postgresql/data
